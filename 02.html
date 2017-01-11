@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>javascript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="assert.js"></script>
+  </head>
+
+  <body>
+    <pre id="console">
+      <script>
+'use strict';
+
+// The problem:
+//   - terms/concepts
+//   - inputs
+//     - arg 1: "number", a positive integer-valued Number
+//   - outputs:
+//     - an integer-valued Number that is the sum of all digits in "number"
+//   - bad input: assume we always get a positive integer argument
+//   - model the problem (for example driven problems)
+//
+// Examples/Test cases:
+//   - Happy path tests
+//     - sum(23) -> 5
+//     - sum(496) -> 19
+//     - sum(123456789) -> 45
+//   - Edge case tests
+//     - sum(9) -> 9
+//     - sum(99999) -> 45
+//
+// Data structure
+//   - inputs: Number
+//   - rules: Array
+//   - outputs: Number
+//
+// Algorithm
+//   - convert number to String
+//   - split string into Array of digit characters
+//   - map digit characters to Numbers
+//   - reduce numbers with summation
+//   - return reduced value
+
+function sum(number) {
+  return String(number).split('').map(Number).reduce(
+    function (accumulator, value) {
+      return accumulator + value;
+    }
+  );
+}
+
+// test cases
+/* global show, log, theEnd */
+log(sum(23), 5);
+log(sum(496), 19);
+log(sum(123456789), 45);
+log(sum(9), 9);
+log(sum(99999), 45);
+theEnd();
+      </script>
+    </pre>
+  </body>
+</html>

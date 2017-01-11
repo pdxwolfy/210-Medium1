@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>javascript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="assert.js"></script>
+  </head>
+
+  <body>
+    <pre id="console">
+      <script>
+'use strict';
+
+// The problem:
+//   - inputs
+//     - arg 1: "fruitQuantityList", Array of Arrays
+//       - subarrays are 2-element arrays
+//         - first element is the fruit name (String)
+//         - second element is the fruit quantity (non-negative integer Number)
+//   - outputs
+//     - Array of fruit names
+//     - 1 fruit name for each quantity of fruit
+//       - e.g.: if 3 apples, then ['apple', 'apple', 'apple']
+//   - assumptions
+//     - input is valid
+//
+// Examples/Test cases:
+//   - Happy path tests
+//     - buyFruit([['apples', 3], ['orange', 1], ['bananas', 2]]) ->
+//       ['apples', 'apples', 'apples', 'orange', 'bananas', 'bananas']
+//     - buyFruit([['apples', 2], ['orange', 1], ['apples', 1], ['bananas', 2]])
+//       -> ['apples', 'apples', 'orange', 'apples', 'bananas', 'bananas']
+//   - Edge case tests
+//     - buyFruit([]) -> []
+//
+// Data structure
+//   - inputs: Array of 2-element arrays (String, Number)
+//   - outputs: Array of Strings
+//
+// Algorithm
+//   - result is new Object
+//   - foreach element in fruitQuantityList
+//     - add fruitQuantity to result[fruitName]
+
+function buyFruit(fruitQuantityList) {
+  var fruitList = [];
+
+  fruitQuantityList.forEach(
+    function (nameAndQuantity) {
+      var name = nameAndQuantity[0];
+      var quantity = nameAndQuantity[1];
+      for (var count = 0; count < quantity; ++count) {
+        fruitList.push(name);
+      }
+    }
+  );
+
+  return fruitList;
+}
+
+// test cases
+/* global show, log, theEnd */
+log();
+log(buyFruit([['apples', 3], ['orange', 1], ['bananas', 2]]),
+    ['apples', 'apples', 'apples', 'orange', 'bananas', 'bananas']);
+log(buyFruit([['apples', 2], ['orange', 1], ['apples', 1], ['bananas', 2]]),
+    ['apples', 'apples', 'orange', 'apples', 'bananas', 'bananas']);
+log(buyFruit([]), []);
+theEnd();
+      </script>
+    </pre>
+  </body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>javascript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="assert.js"></script>
+  </head>
+
+  <body>
+    <pre id="console">
+      <script>
+'use strict';
+
+function substringsAtStart(string) {
+  function run(size) {
+    return string.substr(0, size);
+  }
+
+  var result = [];
+  for (var size = 1; size <= string.length; ++size) {
+    result.push(run(size));
+  }
+
+  return result;
+}
+
+function substrings(string) {
+  var results = [];
+  for (var index = 0; index < string.length; ++index) {
+    results = results.concat(substringsAtStart(string.substr(index)));
+  }
+
+  return results;
+}
+
+// The problem:
+//   - inputs
+//     - arg 1: "string", String
+//   - outputs
+//     - Array of Strings
+//   - assumptions
+//     - Argument is always a String
+//   - rules
+//     - palindromes have at least 2 characters
+//     - palindromes may occur multiple times
+//     - palindromes should be reported as many times as they appear
+//     - palindromes are case sensitive
+//     - palindromes consider all characters
+//     - each String in output is a palindrome
+//     - each output palindrome is a substring of "string"
+//     - output palindromes appear in same order they appear in "string"
+//     - if multiple palindromes begin at same spot, list them in length order
+//
+// Examples/Test cases:
+//   - Happy path tests
+//     - palindromes('abcd') -> []
+//     - palindromes('madam') -> ['madam', 'ada']
+//     - palindromes('hello-madam-did-madam-goodbye') ->
+//       [ 'll', '-madam-', '-madam-did-madam-', 'madam', 'madam-did-madam',
+//         'ada', 'adam-did-mada', 'dam-did-mad', 'am-did-ma', 'm-did-m',
+//         '-did-', 'did', '-madam-', 'madam', 'ada', 'oo' ]
+//
+//   - Edge case tests
+//     - palindromes('') -> []
+//     - palindromes('Madam') -> ['ada']
+//     - palindromes('MadAm') -> []
+//     - palindromes('ma-dam') -> []
+//     - palindromes('knitting cassettes') ->
+//       [ 'nittin', 'itti', 'tt', 'ss', 'settes', 'ette', 'tt' ]
+//
+// Data structure
+//   - inputs: String
+//   - rules: Array of characters
+//   - outputs: Array of Strings
+//
+// Algorithm
+//   - function isPalindrome(string)
+//     - return string == reverse(string)
+//
+//   - get array of all substrings of "string"
+//   - select all substrings of "string" that are palindromes
+
+function reverse(string) {
+  return string.split('').reverse().join('');
+}
+
+function palindromes(string) {
+  return substrings(string).filter(
+    function isPalindrome(substr) {
+      return substr.length > 1 && substr === reverse(substr);
+    }
+  );
+}
+
+// test cases
+/* global show, log, theEnd */
+/* eslint-disable indent */
+log(palindromes('abcd'), []);
+log(palindromes('madam'), ['madam', 'ada']);
+log(palindromes('hello-madam-did-madam-goodbye'),
+    ['ll', '-madam-', '-madam-did-madam-', 'madam',
+     'madam-did-madam', 'ada', 'adam-did-mada', 'dam-did-mad',
+     'am-did-ma', 'm-did-m', '-did-', 'did', '-madam-', 'madam',
+     'ada', 'oo']);
+log(palindromes(''), []);
+log(palindromes('Madam'), ['ada']);
+log(palindromes('MadAm'), []);
+log(palindromes('ma-dam'), []);
+log(palindromes('knitting cassettes'),
+    ['nittin', 'itti', 'tt', 'ss', 'settes', 'ette', 'tt']);
+theEnd();
+      </script>
+    </pre>
+  </body>
+</html>

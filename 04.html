@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>javascript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="assert.js"></script>
+  </head>
+
+  <body>
+    <pre id="console">
+      <script>
+'use strict';
+
+// The problem:
+//   - terms/concepts
+//   - inputs
+//     - arg 1: "numbers", Array of Numbers
+//   - outputs:
+//     - a Number that is equal to the sum of the sums of each run of leading
+//       numbers from "numbers"
+//     - example: [2, 5, 7] -> (2) + (2 + 5) + (2 + 5 + 7) -> 23
+//   - assumptions
+//     - "numbers" always contains at least element
+//     - all elements of "numbers" are valid Numbers
+//   - rules
+//     - compute sum of first 1 numbers
+//     - compute sum of first 2 numbers
+//     - compute sum of first 3 numbers
+//       ...
+//     - compute sum of first n - 1 numbers (n is number of numbers)
+//     - compute sum of first n numbers
+//     - compute sum of all sums
+//
+// Examples/Test cases:
+//   - Happy path tests
+//     - sumOfSums([3, 5, 2])       -> (3) + (3 + 5) + (3 + 5 + 2) # -> 21
+//     - sumOfSums([1, 5, 7, 3])    -> (1) + (1+5) + (1+5+7) + (1+5+7+3) -> 36
+//     - sumOfSums([4])             -> 4
+//     - sumOfSums([1, 2, 3, 4, 5]) -> 35
+//
+// Data structure
+//   - inputs: Array of Numbers
+//   - outputs: Array of Numbers
+//
+// Algorithm
+//   - sum = 0
+//   - map "numbers" to Array of sums using "sum += number"
+//   - reduce Array of sums using sum
+
+function sumOfSums(numbers) {
+  var sum = 0;
+  var arrayOfSums = numbers.map(
+    function (number) {
+      sum += number;
+      return sum;
+    }
+  );
+
+  return arrayOfSums.reduce(
+    function (accumulator, sumOfNumbers) {
+      return accumulator + sumOfNumbers;
+    }
+  );
+}
+
+// test cases
+/* global show, log, theEnd */
+log(sumOfSums([3, 5, 2]),      21);
+log(sumOfSums([1, 5, 7, 3]),   36);
+log(sumOfSums([4]),            4);
+log(sumOfSums([1, 2, 3, 4, 5]), 35);
+theEnd();
+      </script>
+    </pre>
+  </body>
+</html>

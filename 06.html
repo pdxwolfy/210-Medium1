@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>javascript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="assert.js"></script>
+  </head>
+
+  <body>
+    <pre id="console">
+      <script>
+'use strict';
+
+// The problem:
+//   - inputs
+//     - arg 1: "string", String
+//   - outputs
+//     - Array of Strings
+//   - assumptions
+//     - the argument is always a String
+//   - rules
+//     - output Array contains all possible non-empty substrings of "string"
+//     - if "string" is empty, returns empty Array
+//
+// Examples/Test cases:
+//   - Happy path tests
+//     - substrings('abcde') -> ['a', 'ab', 'abc', 'abcd', 'abcde',
+//                               'b', 'bc', 'bcd', 'bcde',
+//                               'c', 'cd', 'cde',
+//                               'd', 'de',
+//                               'e']
+//     - substrings('abc') -> ['a', 'ab', 'abc', 'b', 'bc', 'c']
+//     - substrings('ab') -> ['a', 'ab', 'b']
+//   - Edge case tests
+//     - substrings('a') -> ['a']
+//     - substrings('') -> []
+//
+// Data structure
+//   - inputs: String
+//   - rules: String
+//   - outputs: Array of Strings
+//
+// Algorithm
+//   - create empty results Array
+//   - for each charaacter index in "string"
+//     - extract substring starting at index through end of string
+//     - concatenate all runs from substring
+//   - return results Array
+//   --------------------------------
+//   - all runs from "string"
+//     - create empty results Array
+//     - for size = 1 to length of string
+//       - push slice(0, size) from Array to results Array
+//     - return results Array
+
+function substringsAtStart(string) {
+  function run(size) {
+    return string.substr(0, size);
+  }
+
+  var result = [];
+  for (var size = 1; size <= string.length; ++size) {
+    result.push(run(size));
+  }
+
+  return result;
+}
+
+function substrings(string) {
+  var results = [];
+  for (var index = 0; index < string.length; ++index) {
+    results = results.concat(substringsAtStart(string.substr(index)));
+  }
+
+  return results;
+}
+
+// test cases
+/* global show, log, theEnd */
+/* eslint-disable indent */
+log(substrings('abcde'),
+    ['a', 'ab', 'abc', 'abcd', 'abcde',
+     'b', 'bc', 'bcd', 'bcde',
+     'c', 'cd', 'cde',
+     'd', 'de',
+     'e']);
+log(substrings('abc'), ['a', 'ab', 'abc', 'b', 'bc', 'c']);
+log(substrings('ab'),  ['a', 'ab', 'b']);
+log(substrings('a'),   ['a']);
+log(substrings(''),    []);
+theEnd();
+      </script>
+    </pre>
+  </body>
+</html>

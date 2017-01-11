@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>javascript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="assert.js"></script>
+  </head>
+
+  <body>
+    <pre id="console">
+      <script>
+'use strict';
+
+// The problem:
+//   - terms/concepts
+//   - inputs
+//     - arg 1: "integers", Array of numbers
+//       - all numbers are integers between 0 and 19, inclusive
+//   - outputs:
+//     - the values from "integers" sorted by the English word for each number
+//   - rules
+//     0 -> zero
+//     1 -> one
+//     2 -> two
+//     3 -> three
+//     4 -> four
+//     5 -> five
+//     6 -> six
+//     7 -> seven
+//     8 -> eight
+//     9 -> nine
+//     10 -> ten
+//     11 -> eleven
+//     12 -> twelve
+//     13 -> thirteen
+//     14 -> fourteen
+//     15 -> fifteen
+//     16 -> sixteen
+//     17 -> seventeen
+//     18 -> eighteen
+//     19 -> nineteen
+//   - bad input: assume all inputs are valid
+//
+// Examples/Test cases:
+//   - Happy path tests
+//     - [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+//       -> [8, 18, 11, 15, 5, 4, 14, 9, 19, 1, 7, 17, 6, 16, 10, 13, 3, 12,
+//           2, 0]
+//     - [0, 13, 19, 12, 13, 6, 7, 13, 9, 4, 10]
+//       -> [4, 9, 19, 7, 6, 10, 13, 13, 13, 12, 0]
+//   - Edge case tests
+//     - [5, 5, 5, 5] -> [5, 5, 5, 5]
+//     - [] -> []
+//
+// Data structure
+//   - inputs: Array of Numbers (integers) between 0 and 19 inclusive
+//   - rules: Array of number names
+//   - outputs: Array of Numbers (integers) between 0 and 19 inclusive
+//
+// Algorithm
+//   - sort integers using function:
+//     - lookup number name for first number
+//     - lookup number name for second number
+//     - if number name for first number < number name for second number
+//       - return -1
+//     - else if number name for first number > number name for second number
+//       - return -1
+//     - else
+//       - return 0
+
+var NAMES = [
+  'zero',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+  'eleven',
+  'twelve',
+  'thirteen',
+  'fourteen',
+  'fifteen',
+  'sixteen',
+  'seventeen',
+  'eighteen',
+  'nineteen',
+];
+
+function alphabeticNumberSort(integers) {
+  return integers.sort(
+    function (first, second) {
+      var firstName = NAMES[first];
+      var secondName = NAMES[second];
+      if (firstName < secondName) {
+        return -1;
+      } else if (firstName > secondName) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  );
+}
+
+// test cases
+/* global show, log, theEnd */
+/* eslint-disable indent */
+log(alphabeticNumberSort([0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                            10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
+    [8, 18, 11, 15, 5, 4, 14, 9, 19, 1, 7, 17, 6, 16, 10, 13, 3, 12, 2, 0]);
+
+log(alphabeticNumberSort([0, 13, 19, 12, 13, 6, 7, 13, 9, 4, 10]),
+    [4, 9, 19, 7, 6, 10, 13, 13, 13, 12, 0]);
+
+log(alphabeticNumberSort([5, 5, 5, 5]), [5, 5, 5, 5]);
+log(alphabeticNumberSort([7]), [7]);
+log(alphabeticNumberSort([]), []);
+theEnd();
+      </script>
+    </pre>
+  </body>
+</html>

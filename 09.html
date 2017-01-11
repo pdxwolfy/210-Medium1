@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>javascript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="assert.js"></script>
+  </head>
+
+  <body>
+    <pre id="console">
+      <script>
+'use strict';
+
+// The problem:
+//   - terms/concepts
+//   - inputs
+//     - arg 1: "inventoryItem", Number (non-negative integer)
+//     - arg 2: "transactions", Array of Transaction objects
+//   - outputs
+//     - Array of Transaction objects
+//   - assumptions
+//     - inputs are valid
+//   - model the problem (for example driven problems)
+//
+// Examples/Test cases:
+//   - Data
+//     - transactions = [{ id: 101, movement: 'in', quantity: 5, },
+//                       { id: 105, movement: 'in', quantity: 10, },
+//                       { id: 102, movement: 'out', quantity: 17, },
+//                       { id: 101, movement: 'in', quantity: 12, },
+//                       { id: 103, movement: 'out', quantity: 15, },
+//                       { id: 102, movement: 'out', quantity: 15, },
+//                       { id: 105, movement: 'in', quantity: 25, },
+//                       { id: 101, movement: 'out', quantity: 18, },
+//                       { id: 102, movement: 'in', quantity: 22, },
+//                       { id: 103, movement: 'out', quantity: 15, },
+//                      ]
+//   - Happy path tests
+//     - transactionsFor(101, transactions) ->
+//       [{ id: 101, movement: 'in', quantity: 5 },
+//        { id: 101, movement: 'in', quantity: 12 },
+//        { id: 101, movement: 'out', quantity: 18 },]
+//     - transactionsFor(104, transactions) -> []
+//   - Edge case tests
+//     - transactionsFor(101, []) -> []
+//
+// Data structure
+//   - inputs: Number, Array of Transactions
+//   - outputs: Array of Transactions
+//   - Transaction: Object
+//       id: Number (non-negative integer), inventory item id
+//       movement: String ('in' or 'out')
+//       quantity: Number (non-negative integer), count of this item id
+//
+// Algorithm
+//   - filter transactions for id === inventoryItem
+
+function transactionsFor(inventoryItem, transactionsList) {
+  return transactionsList.filter(
+    function (transaction) {
+      return inventoryItem === transaction.id;
+    }
+  );
+}
+
+// test cases
+/* global show, log, theEnd */
+/* eslint-disable indent */
+var transactions = [{ id: 101, movement: 'in', quantity: 5 },
+                    { id: 105, movement: 'in', quantity: 10 },
+                    { id: 102, movement: 'out', quantity: 17 },
+                    { id: 101, movement: 'in', quantity: 12 },
+                    { id: 103, movement: 'out', quantity: 15 },
+                    { id: 102, movement: 'out', quantity: 15 },
+                    { id: 105, movement: 'in', quantity: 25 },
+                    { id: 101, movement: 'out', quantity: 18 },
+                    { id: 102, movement: 'in', quantity: 22 },
+                    { id: 103, movement: 'out', quantity: 15 },
+                  ];
+log();
+log(transactionsFor(101, transactions),
+    [{ id: 101, movement: 'in', quantity: 5 },
+     { id: 101, movement: 'in', quantity: 12 },
+     { id: 101, movement: 'out', quantity: 18 }]);
+log(transactionsFor(104, transactions), []);
+log(transactionsFor(101, []), []);
+theEnd();
+      </script>
+    </pre>
+  </body>
+</html>

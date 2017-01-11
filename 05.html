@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>javascript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="assert.js"></script>
+  </head>
+
+  <body>
+    <pre id="console">
+      <script>
+'use strict';
+
+// The problem:
+//   - terms/concepts
+//     - "run": a leading substring. A "run" of "n" characters consists of the
+//       first "n" characters of a string.
+//   - inputs
+//     - arg 1: "string", String
+//   - outputs
+//     - an Array
+//       - contains all possible runs from "string"
+//       - arranged from shortest run to longest run
+//     - if "string" is empty, the output is an empty Array
+//
+// Examples/Test cases:
+//   - Happy path tests
+//     - substringsAtStart('abc')   -> ['a', 'ab', 'abc']
+//     - substringsAtStart('xyzzy') -> ['x', 'xy', 'xyz', 'xyzz', 'xyzzy']
+//   - Edge case tests
+//     - substringsAtStart('a')     -> ['a']
+//     - substringsAtStart('')      -> []
+//
+// Data structure
+//   - inputs: String
+//   - outputs: Array of Strings
+//
+// Algorithm
+//   - Function: Extract a run of "size" characters from "string"
+//     - return substring from position 0 to position size - 1 from "string"
+//
+//   - create an empty result Array
+//   - for size in [1, length of "string"]
+//     - push "size" character run from "string" into Array
+//   - return result Array
+
+function substringsAtStart(string) {
+  function run(size) {
+    return string.substr(0, size);
+  }
+
+  var result = [];
+  for (var size = 1; size <= string.length; ++size) {
+    result.push(run(size));
+  }
+
+  return result;
+}
+
+// test cases
+/* global show, log, theEnd */
+log(substringsAtStart('abc'),   ['a', 'ab', 'abc']);
+log(substringsAtStart('xyzzy'), ['x', 'xy', 'xyz', 'xyzz', 'xyzzy']);
+log(substringsAtStart('a'),     ['a']);
+log(substringsAtStart(''),      []);
+theEnd();
+      </script>
+    </pre>
+  </body>
+</html>

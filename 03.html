@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>javascript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="assert.js"></script>
+  </head>
+
+  <body>
+    <pre id="console">
+      <script>
+'use strict';
+
+// The problem:
+//   - terms/concepts
+//   - inputs
+//     - arg 1: array1, Array of Numbers with "n" elements
+//     - arg 2: array2, Array of Numbers with "m" elements
+//   - outputs:
+//     - a new Array with "n" * "m" elements
+//     - each element is the product of a single number from array1 and array2
+//     - the elements are sorted in ascending numeric order
+//   - bad input:
+//     - assume both arguments are valid Arrays of numbers
+//     - if either array1 or array2 is empty, output is empty Array
+//
+// Examples/Test cases:
+//   - Happy path tests
+//     - multiplyAllPairs([2, 4], [4, 3, 1, 2]) -> [2, 4, 4, 6, 8, 8, 12, 16]
+//     - multiplyAllPairs([5, 6, 7], [8, 9]) -> [40, 45, 48, 54, 56, 63]
+//     - multiplyAllPairs([7, 6, 5], [9, 8]) -> [40, 45, 48, 54, 56, 63]
+//     - multiplyAllPairs([8, 9], [7, 6, 5]) -> [40, 45, 48, 54, 56, 63]
+//   - Edge case tests
+//     - multiplyAllPairs([2], [4]) -> [8]
+//     - multiplyAllPairs([2, 4], []) -> []
+//     - multiplyAllPairs([], [2, 4]) -> []
+//
+// Data structure
+//   - inputs: two Arrays of Numbers
+//   - rules:
+//   - outputs: Array of Numbers
+//
+// Algorithm
+//   - create empty result Array
+//   - foreach number in array1
+//     - foreach number in array2
+//       - push product of two numbers to result
+//   - sort result Array numerically
+
+function multiplyAllPairs(array1, array2) {
+  var result = [];
+  array1.forEach(
+    function (value1) {
+      array2.forEach(
+        function (value2) {
+          result.push(value1 * value2);
+        }
+      );
+    }
+  );
+
+  return result.sort(
+    function (a, b) {
+      return a - b;
+    }
+  );
+}
+
+// test cases
+/* global show, log, theEnd */
+log(multiplyAllPairs([2, 4], [4, 3, 1, 2]), [2, 4, 4, 6, 8, 8, 12, 16]);
+log(multiplyAllPairs([5, 6, 7], [8, 9]),    [40, 45, 48, 54, 56, 63]);
+log(multiplyAllPairs([7, 6, 5], [9, 8]),    [40, 45, 48, 54, 56, 63]);
+log(multiplyAllPairs([8, 9], [7, 6, 5]),    [40, 45, 48, 54, 56, 63]);
+log(multiplyAllPairs([2], [4]),             [8]);
+log(multiplyAllPairs([2, 4], []),           []);
+log(multiplyAllPairs([], [2, 4]),           []);
+theEnd();
+      </script>
+    </pre>
+  </body>
+</html>

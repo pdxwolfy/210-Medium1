@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>javascript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="assert.js"></script>
+  </head>
+
+  <body>
+    <pre id="console">
+      <script>
+'use strict';
+
+function transactionsFor(inventoryItem, transactionsList) {
+  return transactionsList.filter(
+    function (transaction) {
+      return inventoryItem === transaction.id;
+    }
+  );
+}
+
+// The problem:
+//   - terms/concepts
+//   - inputs
+//     - arg 1: "inventoryItem", Number (non-negative integer)
+//     - arg 2: "transactions", Array of Transaction objects
+//   - outputs
+//     - Array of Transaction objects
+//   - assumptions
+//     - inputs are valid
+//   - model the problem (for example driven problems)
+//
+// Examples/Test cases:
+//   - Data
+//     - transactions = [{ id: 101, movement: 'in', quantity: 5, },
+//                       { id: 105, movement: 'in', quantity: 10, },
+//                       { id: 102, movement: 'out', quantity: 17, },
+//                       { id: 101, movement: 'in', quantity: 12, },
+//                       { id: 103, movement: 'out', quantity: 15, },
+//                       { id: 102, movement: 'out', quantity: 15, },
+//                       { id: 105, movement: 'in', quantity: 25, },
+//                       { id: 101, movement: 'out', quantity: 18, },
+//                       { id: 102, movement: 'in', quantity: 22, },
+//                       { id: 103, movement: 'out', quantity: 15, },
+//                      ]
+//   - Happy path tests
+//     - transactionsFor(101, transactions) ->
+//       [{ id: 101, movement: 'in', quantity: 5 },
+//        { id: 101, movement: 'in', quantity: 12 },
+//        { id: 101, movement: 'out', quantity: 18 },]
+//     - transactionsFor(104, transactions) -> []
+//   - Edge case tests
+//     - transactionsFor(101, []) -> []
+//
+// Data structure
+//   - inputs: Number, Array of Transactions
+//   - outputs: Array of Transactions
+//   - Transaction: Object
+//       id: Number (non-negative integer), inventory item id
+//       movement: String ('in' or 'out')
+//       quantity: Number (non-negative integer), count of this item id
+//
+// Algorithm
+//   - get transactions for id
+//   - reduce quantity based on movement
+//   - return boolean(quantity > 0)
+
+function isItemAvailable(inventoryItem, transactionsList) {
+  var matchingTransactions = transactionsFor(inventoryItem, transactionsList);
+  var remaining = matchingTransactions.reduce(
+    function (accumulator, transaction) {
+      var factor = (transaction.movement === 'in') ? 1 : -1;
+      return accumulator + (factor * transaction.quantity);
+    },
+    0
+  );
+
+  return remaining > 0;
+}
+
+// test cases
+/* global show, log, theEnd */
+/* eslint-disable indent */
+var transactions = [{ id: 101, movement: 'in', quantity: 5 },
+                    { id: 105, movement: 'in', quantity: 10 },
+                    { id: 102, movement: 'out', quantity: 17 },
+                    { id: 101, movement: 'in', quantity: 12 },
+                    { id: 103, movement: 'out', quantity: 15 },
+                    { id: 102, movement: 'out', quantity: 15 },
+                    { id: 105, movement: 'in', quantity: 25 },
+                    { id: 101, movement: 'out', quantity: 18 },
+                    { id: 102, movement: 'in', quantity: 22 },
+                    { id: 103, movement: 'out', quantity: 15 },
+                  ];
+log(isItemAvailable(101, transactions), false);
+log(isItemAvailable(102, transactions), false);
+log(isItemAvailable(103, transactions), false);
+log(isItemAvailable(104, transactions), false);
+log(isItemAvailable(105, transactions), true);
+log(isItemAvailable(101, []), false);
+theEnd();
+      </script>
+    </pre>
+  </body>
+</html>
